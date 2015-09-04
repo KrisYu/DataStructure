@@ -21,7 +21,7 @@ void insertFront(node *&head, int n){
     }
 }
 
-void display(node* head){
+void traverse1(node* head){
     while (head) {
         cout << head->data <<" ";
         head = head->next;
@@ -30,7 +30,7 @@ void display(node* head){
     cout << endl;
 }
 
-void traverse(node* head){
+void traverse2(node* head){
     for (node* curr = head; curr != NULL; curr = curr->next)
         cout << curr->data << " ";
     cout << endl;
@@ -79,6 +79,20 @@ void deleteNode(node *&head, int n){
     }
 }
 
+void deleteNodeRec(node *&head, int n){
+    if (!findVal(head,n)) return;
+    
+    node* prev = NULL;
+    node* curr = head;
+    // the delete node is at head
+    if (head->data == n){
+        head = head->next;
+        delete curr;
+    } else {
+        deleteNodeRec(curr->next,n);
+    }
+}
+
 void reverseList(node *&head){
     node* prev = NULL;
     node* curr = head;
@@ -117,29 +131,29 @@ int main(){
     node* head = NULL;
     
     insertFront(head,10);
-    display(head);
+    traverse1(head);
     
     insertFront(head,20);
-    display(head);
+    traverse1(head);
     
     insertFront(head,30);
-    display(head);
+    traverse1(head);
     
     insertFront(head,35);
-    display(head);
+    traverse1(head);
     
     insertFront(head,40);
-    display(head);
+    traverse1(head);
     
     insertFront(head,5);
-    display(head);
+    traverse1(head);
     
-    traverse(head);
+    traverse1(head);
     traverseRec(head);
     
     cout << endl << "reverseList "<<endl;
     reverseList(head);
-    traverse(head);
+    traverse1(head);
     
     cout <<endl << "find things" << endl;
     
@@ -152,20 +166,20 @@ int main(){
     cout << "number of nodes " << count(head) << endl;
     
     cout << "delete node 5 \n";
-    deleteNode(head,5);
-    traverse(head);
+    deleteNodeRec(head,5);
+    traverse1(head);
     
     cout << "delete node 40 \n";
-    deleteNode(head,40);
-    traverse(head);
+    deleteNodeRec(head,40);
+    traverse1(head);
     
     cout << "delete node 70 \n";
-    deleteNode(head,70);
-    traverse(head);
+    deleteNodeRec(head,70);
+    traverse1(head);
     
     cout << "delete node 10 \n";
-    deleteNode(head,10);
-    traverse(head);
+    deleteNodeRec(head,10);
+    traverse1(head);
     
     
 }
